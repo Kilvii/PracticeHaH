@@ -1,0 +1,52 @@
+@import './base.css';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Центрируем объекты по оси X */
+    justify-content: center; /* Центрируем объекты по оси Y */
+    height: 100vh; /* Растягиваем контейнер на всю высоту видимой области */
+  }
+  
+  .header, .main, .list {
+    margin-bottom: 20px; /* Отступ между блоками */
+  }
+  
+  .input-field {
+    text-align: center;
+    height: 30px;
+    width: 225px;
+    font-size: 16px;
+  }
+
+  .order-list {
+    list-style-type: decimal;
+  }
+  
+  .item {
+    font-size: 16px;
+    display: flex;
+    align-items: center; /* Выравниваем элементы по вертикали */  
+  }
+  
+  .item span {
+    padding-right: 10px;
+  }
+
+  .item button {
+    margin-right: 6px;
+  }
+  
+  .editBtn {
+    background-color: rgba(0, 128, 0, 0.663);
+    border-color: green;
+  }
+
+  .deleteBtn {
+    background-color: rgba(255, 0, 0, 0.662);
+    border-color: red;
+  }
+
+  .empty-list {
+    font-size: 16px;
+  }
