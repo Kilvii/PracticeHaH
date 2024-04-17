@@ -31,10 +31,8 @@ const emit = defineEmits([''])
 </script>
 <template>
      <div class="btn-wrap">
-        <!-- /* TODO: Не работает icon */ -->
         <button 
             class="btn" 
-
             :style="{ backgroundColor: backgroundColor, color: color, height: height, width: width }">
             <img v-if="icon" :src="icon" alt="btn-icon"/>
             {{ label }}
@@ -54,8 +52,7 @@ const emit = defineEmits([''])
     display: flex;
     align-items: center; 
 }
-/* TODO: Не работает hover */
 .btn:hover {
-     background-color: aqua; 
+    border: 3px solid black;
 }
 </style>
