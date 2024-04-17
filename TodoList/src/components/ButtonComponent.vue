@@ -26,18 +26,15 @@ const props = defineProps({
     },
 })
 
-const emit = defineEmits(['action'])
+const emit = defineEmits([''])
 
-function handlePress(event) {
-    emit('action', event.target.value);
-}
 </script>
 <template>
      <div class="btn-wrap">
         <!-- /* TODO: Не работает icon */ -->
         <button 
             class="btn" 
-            @click="handlePress"
+
             :style="{ backgroundColor: backgroundColor, color: color, height: height, width: width }">
             <img v-if="icon" :src="icon" alt="btn-icon"/>
             {{ label }}

@@ -30,26 +30,22 @@ const props = defineProps({
 
 const emit = defineEmits(['editItem', 'deleteItem'])
 
-const editItem = (index) => {
-  const editedItem = prompt('Введите новое значение', items.value[index]);
-  if (editedItem !== null) {
-    items.value[index] = editedItem.trim();
-  }
-};
+function handleEditItem(event) {
+    emit('editItem', event.target.value);
+}
 
-const deleteItem = (index) => {
-  items.value.splice(index, 1);
-};
+function handleDeleteItem(event) {
+    emit('deleteItem', event.target.value);
+}
 
 </script>
 
 <template>
   <div class="card" :style="{ color: color, backgroundColor: backgroundColor, height: height, width: width }">
     <span>{{ item }}</span>
-    <ButtonComponent background-color="red" height="40px" width="46px" @action="editItem(index)" icon="./icons/Add.svg">
+    <ButtonComponent background-color="red" height="40px" width="46px" @click="handleEditItem" icon="./icons/Add.svg">
     </ButtonComponent>
-    <ButtonComponent background-color="green" height="40px" width="46px" @action="deleteItem(index)"
-      icon="./icons/Delete.svg">
+    <ButtonComponent background-color="green" height="40px" width="46px" @click="handleDeleteItem" icon="./icons/Delete.svg">
     </ButtonComponent>
   </div>
 </template>

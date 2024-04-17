@@ -23,12 +23,25 @@ export default {
       }
     };
 
+    const editItem = (index) => {
+      const editedItem = prompt('Введите новое значение', items.value[index]);
+      if (editedItem !== null) {
+        items.value[index] = editedItem.trim();
+      }
+    };
+
+    const deleteItem = (index) => {
+      items.value.splice(index, 1);
+    };
+
     return {
       header,
       strEmptyList,
       newItem,
       items,
       addItem,
+      editItem,
+      deleteItem
     };
   }
 };
@@ -44,7 +57,7 @@ export default {
     <div class="cards">
       <ul class="cards-list">
         <li v-for="(item, index) in items" :key="index">
-          <ObjectCardComponent :item="item" height="80px" width="260px" color="black" backgroundColor="white" />
+          <ObjectCardComponent @editItem="editItem(index)" @deleteItem="deleteItem(index)" :item="item" height="80px" width="260px" color="black" backgroundColor="white" />
         </li>
       </ul>
       <p v-if="!items.length" class="empty-list">
