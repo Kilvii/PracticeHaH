@@ -1,7 +1,15 @@
 <script>
 import { ref } from 'vue';
+import InputComponent from './components/InputComponent.vue';
+import ButtonComponent from './components/ButtonComponent.vue';
+import ObjectCardComponent from './components/ObjectCardComponent.vue';
 
 export default {
+  components: {
+    InputComponent,
+    ButtonComponent,
+    ObjectCardComponent,
+  },
   setup() {
     const header = 'Список дел';
     const newItem = ref('');
@@ -14,24 +22,11 @@ export default {
       }
     };
 
-    const editItem = (index) => {
-      const editedItem = prompt('Введите новое значение', items.value[index]);
-      if (editedItem !== null) {
-        items.value[index] = editedItem.trim();
-      }
-    };
-
-    const deleteItem = (index) => {
-      items.value.splice(index, 1);
-    };
-
     return {
       header,
       newItem,
       items,
       addItem,
-      editItem,
-      deleteItem
     };
   }
 };
@@ -42,30 +37,34 @@ export default {
     <div class="header">
       <h1>{{ header }}</h1>
     </div>
-    <div class="main">
-      <input 
-        class="input-field"
-        v-model.trim="newItem" 
-        @keyup.enter="addItem" 
-        type="text"
-        placeholder="Впишите дело"
-      >
-    </div>
-    <div class="list">
-      <ul class="order-list">
-        <li 
-        v-for="(item, index) in items" 
-        :key="index">
-          <div class="item">
-            <span>{{ item }}</span>
-            <button class="editBtn" @click="editItem(index)">Р</button>
-            <button class="deleteBtn" @click="deleteItem(index)">У</button>
-          </div>
-        </li>
-      </ul>
-      <p v-if="!items.length" class="empty-list">
-        Список пуст
-      </p>
-    </div>
+    <InputComponent 
+    v-model.trim="newItem" 
+    @keyup.enter="addItem" 
+    type="text"
+    height="20px"
+    width="200px"
+    placeholder="Поиск"
+     />
+    <ObjectCardComponent 
+    :items="items"
+    height="80px"
+    width="260px"
+    color="black"
+    backgroundColor="white"
+    />
   </div>
 </template>
+
+<style scoped>
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    height: 100vh; 
+  }
+  
+  .header {
+    margin-bottom: 20px;
+  }
+</style>
