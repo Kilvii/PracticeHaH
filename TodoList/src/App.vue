@@ -1,5 +1,7 @@
 <script>
 import { computed, ref } from 'vue';
+// import { router } from './routes/routes.js';
+import { useRoute, useRouter } from 'vue-router'
 import InputComponent from './components/InputComponent.vue';
 import ButtonComponent from './components/ButtonComponent.vue';
 import ObjectCardComponent from './components/ObjectCardComponent.vue';
@@ -11,6 +13,11 @@ export default {
     ObjectCardComponent,
   },
   setup() {
+    const router = useRouter()
+    if (router.currentRoute.value.path !== '/objects'){
+      router.replace('/objects')
+    }
+
     const strEmptyList = 'Список пуст';
     const strNothingSelected = 'Ничего не выбрано';
     const itemName = ref('');
@@ -28,7 +35,11 @@ export default {
     })
 
     const handleAddItem = () => {
-      showCreateTodo.value = true;
+      router.push('/objects/new');
+      showCreateTodo.value = !showCreateTodo.value;
+      if(showCreateTodo.value == false){
+        router.push('/objects');
+      }
       itemName.value = '';
       itemAddress.value = '';
     };
@@ -47,29 +58,35 @@ export default {
         if (editingIndex.value !== null) {
           items.value[editingIndex.value] = newItem;
           editingIndex.value = null; 
+          router.push('/objects');
         } else {
           items.value.push(newItem);
         }
         showCreateTodo.value = false;
         itemName.value = '';
         itemAddress.value = '';
+        router.push('/objects');
       }
     }
 
     const editItem = (index) => {
+      router.push(`/objects/${index}`)
       showCreateTodo.value = true;
       itemName.value = items.value[index].name;
       itemAddress.value = items.value[index].address;
       editingIndex.value = index;
+      
     };
 
     const deleteItem = (index) => {
       showCreateTodo.value = false;
       items.value.splice(index, 1);
+      router.push('/objects');
     };
 
 
     return {
+      router,
       strEmptyList,
       strNothingSelected,
       showCreateTodo,
@@ -96,7 +113,7 @@ export default {
         <InputComponent v-model.trim="searchInput" type="text" height="40px" width="200px" placeholder="Поиск"
           style="margin-right: 8px" />
         <ButtonComponent background-color="black" height="40px" width="46px" @click="handleAddItem"
-          icon="./src/icons/Add.svg">
+          icon="../src/icons/Add.svg">
         </ButtonComponent>
       </div>
       <div class=sidebar-main>
@@ -136,8 +153,6 @@ export default {
   </div>
 </template>
 
-<!-- TODO: (1) Центр body (4) Routes -->
-
 <style scoped>
 .todolist {
   background-color: rgb(183, 175, 175);
@@ -145,11 +160,10 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  /* max-width: 690px;
-  max-height: 470px; */
   padding: 20px;
   min-width: 320px;
   min-height: 200px;
+  height: 100vh;
 }
 
 .sidebar {
@@ -158,12 +172,18 @@ export default {
   align-items: center;
   justify-content: start;
   height: 470px;
+  width: 316px;
+  padding-top: 10px;
+  border: 3px solid black;
+  border-radius: 8px;
+  margin-right: 8px;
 }
 
 .sidebar-header {
   display: flex;
   flex-direction: row;
   padding: 14px;
+  padding-top: 0px;
   padding-bottom: 20px;
 }
 
@@ -218,9 +238,10 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 100%;
+  height: 470px;
   width: 100%;
   border-radius: 8px;
+  border: 3px solid black;
 }
 
 .inputTodo {

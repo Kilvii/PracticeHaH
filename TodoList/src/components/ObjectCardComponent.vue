@@ -41,15 +41,13 @@ function handleDeleteItem(event) {
 </script>
 
 <template>
-  <div class="card" 
-  :style="{ color: color, backgroundColor: backgroundColor, height: height, width: width }"
-  @click="handleEditItem"
-  >
+  <div class="card" :style="{ color: color, backgroundColor: backgroundColor, height: height, width: width }"
+    @click="handleEditItem">
     <div class=card-header>
       <span class="card-title">{{ item.name }}</span>
-      <ButtonComponent background-color="red" height="40px" width="46px" @click.stop="handleDeleteItem"
-        icon="./src/icons/Delete.svg">
-      </ButtonComponent>
+        <ButtonComponent background-color="red" height="40px" width="46px" @click.stop="handleDeleteItem"
+          icon="../src/icons/Delete.svg">
+        </ButtonComponent>
     </div>
     <span class="card-address">{{ item.address }}</span>
   </div>
@@ -63,7 +61,7 @@ function handleDeleteItem(event) {
   margin-bottom: 16px;
   padding: 8px;
   border-radius: 8px;
-  border: none;
+  border: 2px solid black;
 }
 
 .card-header {
