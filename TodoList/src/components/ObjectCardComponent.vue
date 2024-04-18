@@ -7,7 +7,7 @@ const props = defineProps({
     default: "",
   },
   item: {
-    type: String,
+    type: Object,
     requaired: true,
   },
   color: {
@@ -31,22 +31,27 @@ const props = defineProps({
 const emit = defineEmits(['editItem', 'deleteItem'])
 
 function handleEditItem(event) {
-    emit('editItem', event.target.value);
+  emit('editItem', event.target.value);
 }
 
 function handleDeleteItem(event) {
-    emit('deleteItem', event.target.value);
+  emit('deleteItem', event.target.value);
 }
 
 </script>
 
 <template>
-  <div class="card" :style="{ color: color, backgroundColor: backgroundColor, height: height, width: width }">
-    <span>{{ item }}</span>
-    <ButtonComponent background-color="red" height="40px" width="46px" @click="handleEditItem" icon="./src/icons/Add.svg">
-    </ButtonComponent>
-    <ButtonComponent background-color="green" height="40px" width="46px" @click="handleDeleteItem" icon="./src/icons/Delete.svg">
-    </ButtonComponent>
+  <div class="card" 
+  :style="{ color: color, backgroundColor: backgroundColor, height: height, width: width }"
+  @click="handleEditItem"
+  >
+    <div class=card-header>
+      <span class="card-title">{{ item.name }}</span>
+      <ButtonComponent background-color="red" height="40px" width="46px" @click.stop="handleDeleteItem"
+        icon="./src/icons/Delete.svg">
+      </ButtonComponent>
+    </div>
+    <span class="card-address">{{ item.address }}</span>
   </div>
 </template>
 
@@ -54,15 +59,28 @@ function handleDeleteItem(event) {
 .card {
   font-size: 16px;
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  flex-direction: column;
+  margin-bottom: 16px;
   padding: 8px;
   border-radius: 8px;
   border: none;
-  justify-content: center;
 }
 
-.card span {
-  padding-right: 10px;
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-title {
+  margin-left: 6px;
+}
+
+.card-address {
+  display: flex;
+  align-items: center;
+  margin-left: 6px;
+  color: gray;
+  font-size: 14px;
 }
 </style>

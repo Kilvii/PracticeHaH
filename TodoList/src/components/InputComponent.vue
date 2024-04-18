@@ -33,6 +33,7 @@ function handleInput(event) {
         <label v-if="label"> {{ label }}</label>
         <input 
         class="input-field" 
+        :style="{ height: height, width: width }"
         :value="modelValue" 
         :placeholder="placeholder"
         @input="handleInput"
@@ -46,14 +47,13 @@ function handleInput(event) {
     flex-direction: column;
     align-items: center; 
     justify-content: center; 
-    margin-bottom: 20px;
 }
 
 .input-field {
-    border: 1px solid black;
+    border: 2px solid black;
     border-radius: 8px;
     text-align: left;
-    padding: 12px 20px ;
+    padding: 8px 12px ;
     font-size: 16px;
 }
 </style>

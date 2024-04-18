@@ -41,18 +41,18 @@ const emit = defineEmits([''])
 </template>
 
 <style scoped>
-.btn {
+.btn {  
+    display: flex;
+    align-items: center; 
+    justify-content: center;
     border: none;
     border-radius: 8px;
-    margin-right: 16px;
     cursor: pointer;
 }
 .btn-wrap {
     font-size: 16px;
-    display: flex;
-    align-items: center; 
 }
 .btn:hover {
-    border: 3px solid black;
+    opacity: 0.7;
 }
 </style>
