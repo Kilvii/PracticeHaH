@@ -7,12 +7,11 @@ import ObjectCardComponent from '@/components/ObjectCardComponent.vue';
 import CreateTodoForm from '@/components/CreateTodoForm.vue';
 
 const router = useRouter()
-if (router.currentRoute.value.path !== '/objects') {
-  router.replace('/objects')
-}
 const showCreateTodo = ref(false);
-const itemName = ref('');
-const itemAddress = ref('');
+const cardObject = ref({
+  name: '',
+  address: '',
+})
 const editingIndex = ref(null);
 const searchInput = ref('');
 const items = ref([]);
@@ -30,20 +29,18 @@ const handleAddItem = () => {
   if (showCreateTodo.value == false) {
     router.push('/objects');
   }
-  itemName.value = '';
-  itemAddress.value = '';
 };
 
 const handleResetItem = () => {
-  itemName.value = '';
-  itemAddress.value = '';
+  cardObject.value.name = '';
+  cardObject.value.address = '';
 }
 
-const handleSaveItem = () => {
-  if (itemName.value.trim() !== '' && itemAddress.value.trim() !== '') {
+const handleSaveItem = (newObject) => {
+  if (newObject.value.name.trim() !== '' && newObject.value.address.trim() !== '') {
     let newItem = {
-      name: itemName.value.trim(),
-      address: itemAddress.value.trim()
+      name: newObject.value.name,
+      address: newObject.value.address
     };
     if (editingIndex.value !== null) {
       items.value[editingIndex.value] = newItem;
@@ -53,8 +50,7 @@ const handleSaveItem = () => {
       items.value.push(newItem);
     }
     showCreateTodo.value = false;
-    itemName.value = '';
-    itemAddress.value = '';
+    handleResetItem()
     router.push('/objects');
   }
 }
@@ -62,10 +58,9 @@ const handleSaveItem = () => {
 const editItem = (index) => {
   router.push(`/objects/${index}`)
   showCreateTodo.value = true;
-  itemName.value = items.value[index].name;
-  itemAddress.value = items.value[index].address;
+  cardObject.value.name = items.value[index].name;
+  cardObject.value.address = items.value[index].address;
   editingIndex.value = index;
-
 };
 
 const deleteItem = (index) => {
@@ -97,7 +92,7 @@ const deleteItem = (index) => {
     </aside>
     <div class="main-container">
       <p v-if="!showCreateTodo" class="empty-editor">Ничего не выбрано</p>
-      <CreateTodoForm v-if="showCreateTodo" :item-name="itemName" :item-address="itemAddress" @saveItem="handleSaveItem"
+      <CreateTodoForm v-if="showCreateTodo" :object="cardObject" @saveItem="handleSaveItem"
         @resetFields="handleResetItem" />
     </div>
 

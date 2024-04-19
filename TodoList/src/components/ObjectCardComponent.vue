@@ -26,12 +26,12 @@ const props = defineProps({
 
 const emit = defineEmits(['editItem', 'deleteItem'])
 
-function handleEditItem(event) {
-  emit('editItem', event.target.value);
+function handleEditItem() {
+  emit('editItem');
 }
 
-function handleDeleteItem(event) {
-  emit('deleteItem', event.target.value);
+function handleDeleteItem() {
+  emit('deleteItem');
 }
 
 </script>

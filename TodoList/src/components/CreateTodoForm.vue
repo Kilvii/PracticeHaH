@@ -2,29 +2,23 @@
 import { ref } from 'vue';
 import InputComponent from '@/components/InputComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
-// TODO: Компонент формы
+
 const props = defineProps({
-    itemName: {
-        type: String,
-        default: ""
-    },
-    itemAddress: {
-        type: String,
-        default: ""
+    object: {
+        type: Object,
+        required: true
     },
 });
 
-const name = ref(props.itemName)
-const address = ref(props.address)
-
+const formObject = ref(props.object)
 const emit = defineEmits(['saveItem', 'resetFields'])
 
-function handleSaveItem(event) {
-    emit('saveItem', event.target.value)
+function saveItem() {
+    emit('saveItem', formObject)
 }
 
-function handleResetItem(event) {
-    emit('resetFields', event.target.value)
+function resetItem() {
+    emit('resetFields')
 }
 
 </script>
@@ -32,16 +26,16 @@ function handleResetItem(event) {
 <template>
     <div class="createTodo">
         <div class="inputTodo">
-            <InputComponent v-model.trim="name" type="text" height="40px" width="313px"
+            <InputComponent v-model.trim="formObject.name" type="text" height="40px" width="313px"
                 placeholder="Название объекта" />
-            <InputComponent v-model.trim="address" type="text" height="40px" width="313px"
+            <InputComponent v-model.trim="formObject.address" type="text" height="40px" width="313px"
                 placeholder="Адрес объекта" />
         </div>
         <div class="btnTodo">
             <ButtonComponent background-color="gray" title="Сбросить" height="40px" width="148px"
-                @click="handleResetItem" />
+                @click="resetItem" />
             <ButtonComponent background-color="black" title="Сохранить" height="40px" width="148px"
-                @click="handleSaveItem" />
+                @click="saveItem" />
         </div>
     </div>
 </template>
