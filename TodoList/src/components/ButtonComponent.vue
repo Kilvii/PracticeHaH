@@ -1,16 +1,16 @@
 <script setup>
 const props = defineProps({
-    label: {
+    title: {
         type: String,
         default: "",
-    },
-    backgroundColor: {
-        type: String,
-        default: "black",
     },
     color: {
         type: String,
         default: "white",
+    },
+    backgroundColor: {
+        type: String,
+        default: "black",
     },
     height: {
         type: String,
@@ -26,32 +26,30 @@ const props = defineProps({
     },
 })
 
-const emit = defineEmits([''])
-
 </script>
 <template>
-     <div class="btn-wrap">
-        <button 
-            class="btn" 
-            :style="{ backgroundColor: backgroundColor, color: color, height: height, width: width }">
-            <img v-if="icon" :src="icon" alt="btn-icon"/>
-            {{ label }}
+    <div class="btn-wrap">
+        <button class="btn" :style="{ color: color, backgroundColor: backgroundColor, height: height, width: width }">
+            <img v-if="icon" :src="icon" alt="btn-icon" />
+            {{ title }}
         </button>
     </div>
 </template>
 
 <style scoped>
-.btn {  
+.btn {
     display: flex;
-    align-items: center; 
+    align-items: center;
     justify-content: center;
     border: none;
     border-radius: 8px;
     cursor: pointer;
 }
+
 .btn-wrap {
     font-size: 16px;
 }
+
 .btn:hover {
     opacity: 0.7;
 }

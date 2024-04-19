@@ -2,10 +2,6 @@
 import ButtonComponent from './ButtonComponent.vue';
 
 const props = defineProps({
-  label: {
-    type: String,
-    default: "",
-  },
   item: {
     type: Object,
     requaired: true,
@@ -45,9 +41,8 @@ function handleDeleteItem(event) {
     @click="handleEditItem">
     <div class=card-header>
       <span class="card-title">{{ item.name }}</span>
-        <ButtonComponent background-color="red" height="40px" width="46px" @click.stop="handleDeleteItem"
-          icon="../src/icons/Delete.svg">
-        </ButtonComponent>
+      <ButtonComponent background-color="red" height="40px" width="46px" icon="../src/icons/Delete.svg"
+        @click.stop="handleDeleteItem" />
     </div>
     <span class="card-address">{{ item.address }}</span>
   </div>

@@ -1,12 +1,8 @@
 <script setup>
-const props = defineProps({
-    label: {
-        type: [String, Boolean],
-        default: false,
-    },
-    modelValue: {
+const props = defineProps({ 
+    type: {
         type: String,
-        default: "",
+        default: "text",
     },
     placeholder: {
         type: String,
@@ -21,23 +17,14 @@ const props = defineProps({
         default: "100px",
     },
 })
-const emit = defineEmits(['update:modelValue'])
 
-function handleInput(event) {
-    emit('update:modelValue', event.target.value);
-}
+const model = defineModel()
+
 </script>
 
 <template>
     <div class="input-wrap">
-        <label v-if="label"> {{ label }}</label>
-        <input 
-        class="input-field" 
-        :style="{ height: height, width: width }"
-        :value="modelValue" 
-        :placeholder="placeholder"
-        @input="handleInput"
-        v-bind="$attrs" />
+        <input class="input-field" v-model="model" :style="{ type: type, height: height, width: width }" :placeholder="placeholder" />
     </div>
 </template>
 
@@ -45,15 +32,15 @@ function handleInput(event) {
 .input-wrap {
     display: flex;
     flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
+    align-items: center;
+    justify-content: center;
 }
 
 .input-field {
     border: 2px solid black;
     border-radius: 8px;
     text-align: left;
-    padding: 8px 12px ;
+    padding: 8px 12px;
     font-size: 16px;
 }
 </style>
