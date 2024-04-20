@@ -74,16 +74,14 @@ const deleteItem = (index) => {
   <div class="todolist">
     <aside class="sidebar">
       <div class="sidebar-header">
-        <InputComponent v-model.trim="searchInput" type="text" height="40px" width="200px" placeholder="Поиск" />
-        <ButtonComponent background-color="black" height="40px" width="46px" icon="../src/icons/Add.svg"
-          @click="handleAddItem" />
+        <InputComponent v-model.trim="searchInput" type="text" placeholder="Поиск" />
+        <ButtonComponent background-color="black" icon="../src/icons/Add.svg" @click="handleAddItem" />
       </div>
       <div class=sidebar-main>
         <div class="cards">
           <ul class="cards-list">
             <li v-for="(item, index) in filteredItems" :key="index">
-              <ObjectCardComponent :item="item" height="80px" width="268px" color="black" backgroundColor="white"
-                @editItem="editItem(index)" @deleteItem="deleteItem(index)" />
+              <ObjectCardComponent :item="item" @editItem="editItem(index)" @deleteItem="deleteItem(index)" />
             </li>
           </ul>
         </div>
@@ -117,7 +115,7 @@ const deleteItem = (index) => {
   flex-direction: column;
   align-items: center;
   justify-content: start;
-  height: 470px;
+  height: 469px;
   width: 316px;
   padding-top: 10px;
   border: 3px solid black;
@@ -128,9 +126,12 @@ const deleteItem = (index) => {
 .sidebar-header {
   display: flex;
   flex-direction: row;
-  padding: 14px;
   padding-top: 0px;
   padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  justify-content: center;
+  align-content: center;
 }
 
 .sidebar-header>*:not(:last-child) {
@@ -141,6 +142,7 @@ const deleteItem = (index) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: black gray;
@@ -178,7 +180,7 @@ const deleteItem = (index) => {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  height: 470px;
+  height: 469px;
   width: 350px;
 }
 </style>

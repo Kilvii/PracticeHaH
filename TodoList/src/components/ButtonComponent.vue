@@ -12,24 +12,15 @@ const props = defineProps({
         type: String,
         default: "black",
     },
-    height: {
-        type: String,
-        default: "10px",
-    },
-    width: {
-        type: String,
-        default: "100px",
-    },
     icon: {
         type: String,
         default: "",
     },
 })
-
 </script>
 <template>
     <div class="btn-wrap">
-        <button class="btn" :style="{ color: color, backgroundColor: backgroundColor, height: height, width: width }">
+        <button class="btn" :style="{ color: color, backgroundColor: backgroundColor }">
             <img v-if="icon" :src="icon" alt="btn-icon" />
             {{ title }}
         </button>
@@ -44,10 +35,19 @@ const props = defineProps({
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    height: inherit;
+    width: inherit;
+}
+
+.btn:has(img) {
+    width: 46px;
+    height: 40px;
 }
 
 .btn-wrap {
     font-size: 16px;
+    height: 40px;
+    width: inherit;
 }
 
 .btn:hover {

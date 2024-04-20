@@ -8,14 +8,6 @@ const props = defineProps({
         type: String,
         default: "Ввод",
     },
-    height: {
-        type: String,
-        default: "10px",
-    },
-    width: {
-        type: String,
-        default: "100px",
-    },
 })
 
 const model = defineModel()
@@ -24,7 +16,7 @@ const model = defineModel()
 
 <template>
     <div class="input-wrap">
-        <input class="input-field" v-model="model" :style="{ type: type, height: height, width: width }" :placeholder="placeholder" />
+        <input class="input-field" v-model="model" :placeholder="placeholder" />
     </div>
 </template>
 
@@ -34,13 +26,17 @@ const model = defineModel()
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 40px;
+    width: inherit;
 }
 
 .input-field {
+    height: inherit;
     border: 2px solid black;
     border-radius: 8px;
     text-align: left;
     padding: 8px 12px;
     font-size: 16px;
+    width: inherit;
 }
 </style>

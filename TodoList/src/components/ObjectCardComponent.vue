@@ -6,22 +6,6 @@ const props = defineProps({
     type: Object,
     requaired: true,
   },
-  color: {
-    type: String,
-    default: "white",
-  },
-  backgroundColor: {
-    type: String,
-    default: "black",
-  },
-  height: {
-    type: String,
-    default: "10px",
-  },
-  width: {
-    type: String,
-    default: "100px",
-  },
 })
 
 const emit = defineEmits(['editItem', 'deleteItem'])
@@ -35,13 +19,12 @@ function handleDeleteItem() {
 }
 
 </script>
-
 <template>
-  <div class="card" :style="{ color: color, backgroundColor: backgroundColor, height: height, width: width }"
+  <div class="card"
     @click="handleEditItem">
     <div class=card-header>
       <span class="card-title">{{ item.name }}</span>
-      <ButtonComponent background-color="red" height="40px" width="46px" icon="../src/icons/Delete.svg"
+      <ButtonComponent background-color="red" icon="../src/icons/Delete.svg"
         @click.stop="handleDeleteItem" />
     </div>
     <span class="card-address">{{ item.address }}</span>
@@ -50,13 +33,17 @@ function handleDeleteItem() {
 
 <style scoped>
 .card {
-  font-size: 16px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  font-size: 16px;
+  margin-bottom: 17px;
   padding: 8px;
   border-radius: 8px;
   border: 2px solid black;
+  min-width: 272px;
+  min-height: 80px;
+  color: black;
+  background-color: white;
 }
 
 .card-header {

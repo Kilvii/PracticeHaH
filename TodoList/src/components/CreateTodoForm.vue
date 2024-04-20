@@ -22,20 +22,15 @@ function resetItem() {
 }
 
 </script>
-
 <template>
     <div class="createTodo">
         <div class="inputTodo">
-            <InputComponent v-model.trim="formObject.name" type="text" height="40px" width="313px"
-                placeholder="Название объекта" />
-            <InputComponent v-model.trim="formObject.address" type="text" height="40px" width="313px"
-                placeholder="Адрес объекта" />
+            <InputComponent v-model.trim="formObject.name" type="text" placeholder="Название объекта" />
+            <InputComponent v-model.trim="formObject.address" type="text" placeholder="Адрес объекта" />
         </div>
         <div class="btnTodo">
-            <ButtonComponent background-color="gray" title="Сбросить" height="40px" width="148px"
-                @click="resetItem" />
-            <ButtonComponent background-color="black" title="Сохранить" height="40px" width="148px"
-                @click="saveItem" />
+            <ButtonComponent background-color="gray" title="Сбросить" @click="resetItem" />
+            <ButtonComponent background-color="black" title="Сохранить" @click="saveItem" />
         </div>
     </div>
 </template>
@@ -51,7 +46,9 @@ function resetItem() {
     width: 100%;
     border-radius: 8px;
     border: 3px solid black;
+    padding: 20px;
     padding-top: 10px;
+    padding-bottom: 18px;
 }
 
 .inputTodo {
@@ -60,10 +57,12 @@ function resetItem() {
     align-items: center;
     justify-content: flex-start;
     margin-bottom: auto;
+    width: inherit;
 }
 
 .inputTodo>*:not(:last-child) {
     margin-bottom: 12px;
+    width: 100%;
 }
 
 .btnTodo {
@@ -72,7 +71,7 @@ function resetItem() {
     align-items: flex-end;
     justify-content: flex-end;
     margin-top: auto;
-    margin-bottom: 14px;
+    width: inherit;
 }
 
 .btnTodo>*:not(:last-child) {
