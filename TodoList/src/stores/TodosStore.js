@@ -18,6 +18,11 @@ export const useTodosStore = defineStore("TodosStore", () => {
         });
     })
 
+    function newTodo() {
+        editingIndex.value = null
+        resetTodo()
+    }
+
     function addTodo(newObject) {
         if (newObject.name.trim() !== '' && newObject.address.trim() !== '') {
             let newItem = {
@@ -53,5 +58,5 @@ export const useTodosStore = defineStore("TodosStore", () => {
         todos.splice(index, 1);
     }
 
-    return { todos, showCreateTodo, cardObject, searchInput, editingIndex, filteredTodos, addTodo, editTodo, resetTodo, deleteTodo }
+    return { todos, showCreateTodo, cardObject, searchInput, editingIndex, filteredTodos, newTodo, addTodo, editTodo, resetTodo, deleteTodo }
 })

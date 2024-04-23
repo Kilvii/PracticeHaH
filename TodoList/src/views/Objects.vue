@@ -14,6 +14,7 @@ const router = useRouter()
 const handleAddItem = () => {
   router.push({ name: 'todolist.create' });
   store.showCreateTodo = !store.showCreateTodo;
+  store.newTodo()
   if (!store.showCreateTodo) {
     router.push({ name: 'todolist' });
   }
