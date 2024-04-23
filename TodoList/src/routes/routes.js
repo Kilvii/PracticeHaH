@@ -1,10 +1,27 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
 const routes = [
-    { path: '/', redirect: '/objects' },
-    { path: '/objects', component: page('Objects') },
-    { path: '/objects/new', component: page('Objects') },
-    { path: '/objects/:id', component: page('Objects') },
+    {
+        path: '/',
+        redirect: '/objects',
+    },
+    { 
+        path: '/objects',
+        name: 'todolist',
+        component: page('Objects'),
+        children: [
+            {
+                path: 'new',
+                name: 'todolist.create',
+                component: { template: '<div>Create Todo Form</div>' },
+            },
+            {
+                path: ':id',
+                name: 'todolist.edit',
+                component: { template: '<div>Edit Todo Form</div>' },
+            }
+        ]
+    }
 ]
 
 function page(path) {

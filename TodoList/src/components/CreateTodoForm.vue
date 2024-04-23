@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import InputComponent from '@/components/InputComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 
@@ -10,7 +10,7 @@ const props = defineProps({
     },
 });
 
-const formObject = ref(props.object)
+const formObject = reactive(props.object)
 const emit = defineEmits(['saveItem', 'resetFields'])
 
 function saveItem() {
@@ -29,8 +29,8 @@ function resetItem() {
             <InputComponent v-model.trim="formObject.address" type="text" placeholder="Адрес объекта" />
         </div>
         <div class="btnTodo">
-            <ButtonComponent background-color="gray" title="Сбросить" @click="resetItem" />
-            <ButtonComponent background-color="black" title="Сохранить" @click="saveItem" />
+            <ButtonComponent color="reset" title="Сбросить" @click="resetItem" />
+            <ButtonComponent color="primary" title="Сохранить" @click="saveItem" />
         </div>
     </div>
 </template>

@@ -10,22 +10,22 @@ const props = defineProps({
 
 const emit = defineEmits(['editItem', 'deleteItem'])
 
-function handleEditItem() {
+function editItem() {
   emit('editItem');
 }
 
-function handleDeleteItem() {
+function deleteItem() {
   emit('deleteItem');
 }
 
 </script>
 <template>
   <div class="card"
-    @click="handleEditItem">
-    <div class=card-header>
+    @click="editItem">
+    <div class="card-header">
       <span class="card-title">{{ item.name }}</span>
-      <ButtonComponent background-color="red" icon="../src/icons/Delete.svg"
-        @click.stop="handleDeleteItem" />
+      <ButtonComponent color="delete" icon="../src/icons/Delete.svg"
+        @click.stop="deleteItem" />
     </div>
     <span class="card-address">{{ item.address }}</span>
   </div>

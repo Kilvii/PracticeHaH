@@ -6,11 +6,7 @@ const props = defineProps({
     },
     color: {
         type: String,
-        default: "white",
-    },
-    backgroundColor: {
-        type: String,
-        default: "black",
+        default: "primary",
     },
     icon: {
         type: String,
@@ -20,7 +16,7 @@ const props = defineProps({
 </script>
 <template>
     <div class="btn-wrap">
-        <button class="btn" :style="{ color: color, backgroundColor: backgroundColor }">
+        <button class="btn" :class="[`btn_${color}`]">
             <img v-if="icon" :src="icon" alt="btn-icon" />
             {{ title }}
         </button>
@@ -37,6 +33,19 @@ const props = defineProps({
     cursor: pointer;
     height: inherit;
     width: inherit;
+    color: white;
+}
+
+.btn_primary {
+    background-color: black;
+}
+
+.btn_reset {
+    background-color: gray;
+}
+
+.btn_delete {
+    background-color: red;
 }
 
 .btn:has(img) {
