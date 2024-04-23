@@ -10,12 +10,12 @@ const props = defineProps({
 
 const emit = defineEmits(['editItem', 'deleteItem'])
 
-function editItem() {
-  emit('editItem');
+function editItem(index) {
+  emit('editItem', index);
 }
 
-function deleteItem() {
-  emit('deleteItem');
+function deleteItem(index) {
+  emit('deleteItem', index);
 }
 
 </script>

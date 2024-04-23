@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { computed, reactive, ref } from 'vue';
 
 export const useTodosStore = defineStore("TodosStore", () => {
-    // state = ref()
     const showCreateTodo = ref(false);
     const todos = reactive([])
     const cardObject = reactive({
@@ -12,7 +11,6 @@ export const useTodosStore = defineStore("TodosStore", () => {
     const searchInput = ref('');
     const editingIndex = ref(null)
 
-    // getters = computed()
     const filteredTodos = computed(() => {
         let filterInput = searchInput.value.toLowerCase().trim();
         return todos.filter(item => {
@@ -20,7 +18,6 @@ export const useTodosStore = defineStore("TodosStore", () => {
         });
     })
 
-    // actions = function()
     function addTodo(newObject) {
         if (newObject.name.trim() !== '' && newObject.address.trim() !== '') {
             let newItem = {
@@ -53,7 +50,6 @@ export const useTodosStore = defineStore("TodosStore", () => {
 
     function deleteTodo(index) {
         showCreateTodo.value = false;
-        console.log(index)
         todos.splice(index, 1);
     }
 

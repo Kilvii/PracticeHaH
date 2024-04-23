@@ -10,21 +10,6 @@ import CreateTodoForm from '@/components/CreateTodoForm.vue';
 
 const store = useTodosStore()
 const router = useRouter()
-// const showCreateTodo = ref(false);
-// const cardObject = reactive({
-//   name: '',
-//   address: '',
-// })
-// const editingIndex = ref(null);
-// const searchInput = ref('');
-// const items = reactive([]);
-
-// const filteredItems = computed(() => {
-//   let filterInput = searchInput.value.toLowerCase().trim();
-//   return items.filter(item => {
-//     return item.name.toLowerCase().includes(filterInput);
-//   });
-// })
 
 const handleAddItem = () => {
   router.push({ name: 'todolist.create' });
@@ -34,47 +19,24 @@ const handleAddItem = () => {
   }
 };
 
+const handleSaveItem = (newObject) => {
+  store.addTodo(newObject);
+  if(!store.showCreateTodo){
+    router.push({ name: 'todolist' });
+  }
+}
+
 const handleResetItem = () => {
   store.resetTodo()
-  // cardObject.name = '';
-  // cardObject.address = '';
-}
-
-const handleSaveItem = (newObject) => {
-  // if (newObject.name.trim() !== '' && newObject.address.trim() !== '') {
-  //   let newItem = {
-  //     name: newObject.name,
-  //     address: newObject.address
-  //   };
-  //   if (editingIndex.value !== null) {
-  //     items[editingIndex.value] = newItem;
-  //     editingIndex.value = null;
-  //   } else {
-  //     store.addTodo(newItem)
-  //     items.push(newItem);
-  //   }
-  //   handleResetItem()
-  store.addTodo(newObject);
-  store.showCreateTodo = false;
-  router.push({ name: 'todolist' });
-}
-// }
+};
 
 const handleEditItem = (index) => {
-  console.log(index)
   router.push({ name: 'todolist.edit', params: { id: index } })
-  // showCreateTodo.value = true;
   store.editTodo(index)
-  // cardObject.name = items[index].name;
-  // cardObject.address = items[index].address;
-  // editingIndex.value = index;
 };
 
 const handleDeleteItem = (index) => {
-  console.log(index)
-  // showCreateTodo.value = false;
   store.deleteTodo(index);
-  // items.splice(index, 1);
   router.push({ name: 'todolist' });
 };
 </script>
@@ -90,8 +52,8 @@ const handleDeleteItem = (index) => {
         <div class="cards">
           <ul class="cards-list">
             <li v-for="(item, index) in store.filteredTodos" :key="index">
-              <ObjectCardComponent :item="item" @editItem="handleEditItem"
-                @deleteItem="handleDeleteItem" />
+              <ObjectCardComponent :item="item" @editItem="handleEditItem(index)"
+                @deleteItem="handleDeleteItem(index)" />
             </li>
           </ul>
         </div>
@@ -101,7 +63,7 @@ const handleDeleteItem = (index) => {
     <div class="main-container">
       <p v-if="!store.showCreateTodo" class="empty-editor">Ничего не выбрано</p>
       <CreateTodoForm v-if="store.showCreateTodo" :object="store.cardObject" @saveItem="handleSaveItem"
-        @resetFields="store.resetTodo" />
+        @resetFields="handleResetItem" />
     </div>
 
   </div>
