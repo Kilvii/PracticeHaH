@@ -12,7 +12,7 @@ const store = useTodosStore()
 const router = useRouter()
 
 const handleAddItem = () => {
-  router.push({ name: 'todolist.create' });
+  router.push({ name: 'todolist', params: { id: 'new' } });
   store.showCreateTodo = !store.showCreateTodo;
   store.newTodo()
   if (!store.showCreateTodo) {
@@ -32,7 +32,7 @@ const handleResetItem = () => {
 };
 
 const handleEditItem = (index) => {
-  router.push({ name: 'todolist.edit', params: { id: index } })
+  router.push({ name: 'todolist', params: { id: index } })
   store.editTodo(index)
 };
 
