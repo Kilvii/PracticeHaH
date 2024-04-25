@@ -14,10 +14,12 @@ export const useTodosStore = defineStore("TodosStore", () => {
         if (newObject.name.trim() !== '' && newObject.address.trim() !== '') {
             let newItem = {
                 name: newObject.name,
-                address: newObject.address
+                address: newObject.address,
+                visibility: newObject.visibility,
             };
             if (editingIndex.value !== null) {
-                todos[editingIndex.value] = newItem;
+                todos[editingIndex.value].name = newItem.name;
+                todos[editingIndex.value].address = newItem.address;
                 editingIndex.value = null;            
             } else {
                 todos.push(newItem);

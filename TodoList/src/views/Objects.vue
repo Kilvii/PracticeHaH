@@ -16,12 +16,13 @@ const searchInput = ref('');
 const cardObject = reactive({
   name: '',
   address: '',
+  visibility: true,
 })
 
 const filteredTodos = computed(() => {
   let filterInput = searchInput.value.toLowerCase().trim();
   return store.todos.filter(item => {
-    return item.name.toLowerCase().includes(filterInput);
+    return item.name.toLowerCase().includes(filterInput) && item.visibility === true  ;
   });
 })
 
@@ -85,7 +86,7 @@ const handleVisibilityNavigate = () => {
             <ul class="cards-list">
               <li v-for="(item, index) in filteredTodos" :key="index">
                 <ObjectCardComponent :item="item" @editItem="handleEditItem(index)"
-                  @deleteItem="handleDeleteItem(index)" />
+                  @removeItem="handleDeleteItem(index)" />
               </li>
             </ul>
           </div>
@@ -93,7 +94,6 @@ const handleVisibilityNavigate = () => {
         </div>
       </aside>
       <div class="main-container">
-        <p v-if="!showCreateTodo" class="empty-editor">Ничего не выбрано</p>
         <CreateTodoForm v-if="showCreateTodo" :object="cardObject" @saveItem="handleSaveItem"
           @resetFields="handleResetItem" />
       </div>
@@ -102,50 +102,18 @@ const handleVisibilityNavigate = () => {
 </template>
 
 <style scoped>
-.objects {
-  background-color: rgb(183, 175, 175);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  min-width: 320px;
-  min-height: 200px;
-  height: 100vh;
-}
-
-.navigation {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 360px;
-  margin-bottom: 20px;
-  margin-right: 33px;
-}
-
-.navigation>*:not(:last-child) {
-  margin-right: 20px;
-}
-
-.todolist{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
 
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-  height: 469px;
-  width: 316px;
-  padding-top: 10px;
-  border: 3px solid black;
-  border-radius: 8px;
-  margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    height: 469px;
+    width: 316px;
+    padding-top: 10px;
+    border: 3px solid black;
+    border-radius: 8px;
+    margin-right: 18px;
 }
 
 .sidebar-header {
@@ -157,47 +125,6 @@ const handleVisibilityNavigate = () => {
   padding-right: 20px;
   justify-content: center;
   align-content: center;
-}
-
-.sidebar-header>*:not(:last-child) {
-  margin-right: 10px;
-}
-
-.sidebar-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: black gray;
-  flex-grow: 1;
-  width: 100%;
-}
-
-.cards {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 0 20px;
-}
-
-.cards-list {
-  padding: 0;
-  list-style-type: none;
-  width: 100%;
-}
-
-.empty-list,
-.empty-editor {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  font-size: 16px;
-  color: black;
 }
 
 .main-container {

@@ -8,24 +8,23 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['editItem', 'deleteItem'])
+const emit = defineEmits(['editItem', 'removeItem'])
 
 function editItem(index) {
   emit('editItem', index);
 }
 
-function deleteItem(index) {
-  emit('deleteItem', index);
+function removeItem(index) {
+  emit('removeItem', index);
 }
 
 </script>
 <template>
-  <div class="card"
-    @click="editItem">
+  <div class="card" @click="editItem">
     <div class="card-header">
       <span class="card-title">{{ item.name }}</span>
-      <ButtonComponent color="delete" icon="../src/icons/Delete.svg"
-        @click.stop="deleteItem" />
+      <ButtonComponent :color="item.visibility ? 'delete' : 'primary'"
+        :icon="item.visibility ? '../src/icons/Delete.svg' : '../src/icons/Add.svg'" @click.stop="removeItem" />
     </div>
     <span class="card-address">{{ item.address }}</span>
   </div>
