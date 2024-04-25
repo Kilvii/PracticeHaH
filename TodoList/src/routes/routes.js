@@ -2,7 +2,8 @@ import { createWebHistory, createRouter } from 'vue-router'
 
 const routes = [
     { path: '/', redirect: '/objects'},
-    { path: '/objects/:id?', name: 'todolist', component: page('Objects')},
+    { path: '/objects/:id?', name: 'objects', component: page('Objects')},
+    { path: '/visibility', name: 'visibility', component: page('Visibility')},
 ]
 
 function page(path) {

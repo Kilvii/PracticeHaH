@@ -24,6 +24,12 @@ const props = defineProps({
 </template>
 
 <style scoped>
+.btn-wrap {
+    font-size: 16px;
+    height: 40px;
+    width: inherit;
+}
+
 .btn {
     display: flex;
     align-items: center;
@@ -51,12 +57,6 @@ const props = defineProps({
 .btn:has(img) {
     width: 46px;
     height: 40px;
-}
-
-.btn-wrap {
-    font-size: 16px;
-    height: 40px;
-    width: inherit;
 }
 
 .btn:hover {

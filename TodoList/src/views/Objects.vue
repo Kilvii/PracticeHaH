@@ -2,18 +2,18 @@
 import { computed, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useTodosStore } from '@/stores/TodosStore';
-import { storeToRefs } from 'pinia'
 import InputComponent from '@/components/InputComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import ObjectCardComponent from '@/components/ObjectCardComponent.vue';
 import CreateTodoForm from '@/components/CreateTodoForm.vue';
+import NavItemComponent from '@/components/NavItemComponent.vue';
 
 const store = useTodosStore()
 const router = useRouter()
 
 const showCreateTodo = ref(false);
 const searchInput = ref('');
-const cardObject = reactive({ 
+const cardObject = reactive({
   name: '',
   address: '',
 })
@@ -26,12 +26,12 @@ const filteredTodos = computed(() => {
 })
 
 const handleAddItem = () => {
-  router.push({ name: 'todolist', params: { id: 'new' } });
+  router.push({ name: 'objects', params: { id: 'new' } });
   showCreateTodo.value = !showCreateTodo.value;
   store.newTodo()
   handleResetItem()
   if (!showCreateTodo.value) {
-    router.push({ name: 'todolist' });
+    router.push({ name: 'objects' });
   }
 };
 
@@ -40,7 +40,7 @@ const handleSaveItem = (newObject) => {
   if (added) {
     handleResetItem()
     showCreateTodo.value = false;
-    router.push({ name: 'todolist' });
+    router.push({ name: 'objects' });
   }
 }
 
@@ -50,7 +50,7 @@ const handleResetItem = () => {
 };
 
 const handleEditItem = (index) => {
-  router.push({ name: 'todolist', params: { id: index } })
+  router.push({ name: 'objects', params: { id: index } })
   showCreateTodo.value = true;
   cardObject.name = store.todos[index].name;
   cardObject.address = store.todos[index].address;
@@ -60,49 +60,79 @@ const handleEditItem = (index) => {
 const handleDeleteItem = (index) => {
   showCreateTodo.value = false;
   store.deleteTodo(index);
-  router.push({ name: 'todolist' });
+  router.push({ name: 'objects' });
 };
+
+const handleVisibilityNavigate = () => {
+  router.push({ name: 'visibility' });
+}
 </script>
 
 <template>
-  <div class="todolist">
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <InputComponent v-model.trim="searchInput" type="text" placeholder="Поиск" />
-        <ButtonComponent color="primary" icon="../src/icons/Add.svg" @click="handleAddItem" />
-      </div>
-      <div class="sidebar-main">
-        <div class="cards">
-          <ul class="cards-list">
-            <li v-for="(item, index) in filteredTodos" :key="index">
-              <ObjectCardComponent :item="item" @editItem="handleEditItem(index)"
-                @deleteItem="handleDeleteItem(index)" />
-            </li>
-          </ul>
-        </div>
-        <p v-if="!store.todos.length" class="empty-list">Список пуст</p>
-      </div>
-    </aside>
-    <div class="main-container">
-      <p v-if="!showCreateTodo" class="empty-editor">Ничего не выбрано</p>
-      <CreateTodoForm v-if="showCreateTodo" :object="cardObject" @saveItem="handleSaveItem"
-        @resetFields="handleResetItem" />
+  <div class="objects">
+    <div class="navigation">
+      <NavItemComponent title="Объекты" color="active" />
+      <NavItemComponent title="Отображение" color="default" @click="handleVisibilityNavigate"/>
     </div>
-
+    <div class="todolist">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <InputComponent v-model.trim="searchInput" type="text" placeholder="Поиск" />
+          <ButtonComponent color="primary" icon="../src/icons/Add.svg" @click="handleAddItem" />
+        </div>
+        <div class="sidebar-main">
+          <div class="cards">
+            <ul class="cards-list">
+              <li v-for="(item, index) in filteredTodos" :key="index">
+                <ObjectCardComponent :item="item" @editItem="handleEditItem(index)"
+                  @deleteItem="handleDeleteItem(index)" />
+              </li>
+            </ul>
+          </div>
+          <p v-if="!store.todos.length" class="empty-list">Список пуст</p>
+        </div>
+      </aside>
+      <div class="main-container">
+        <p v-if="!showCreateTodo" class="empty-editor">Ничего не выбрано</p>
+        <CreateTodoForm v-if="showCreateTodo" :object="cardObject" @saveItem="handleSaveItem"
+          @resetFields="handleResetItem" />
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-.todolist {
+.objects {
   background-color: rgb(183, 175, 175);
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 20px;
   min-width: 320px;
   min-height: 200px;
   height: 100vh;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 360px;
+  margin-bottom: 20px;
+  margin-right: 33px;
+}
+
+.navigation>*:not(:last-child) {
+  margin-right: 20px;
+}
+
+.todolist{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar {
