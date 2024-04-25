@@ -2,25 +2,12 @@ import { defineStore } from "pinia";
 import { computed, reactive, ref } from 'vue';
 
 export const useTodosStore = defineStore("TodosStore", () => {
-    const showCreateTodo = ref(false);
+    
     const todos = reactive([])
-    const cardObject = reactive({
-        name: '',
-        address: '',
-    })
-    const searchInput = ref('');
-    const editingIndex = ref(null)
-
-    const filteredTodos = computed(() => {
-        let filterInput = searchInput.value.toLowerCase().trim();
-        return todos.filter(item => {
-            return item.name.toLowerCase().includes(filterInput);
-        });
-    })
+    const editingIndex = ref(null) 
 
     function newTodo() {
         editingIndex.value = null
-        resetTodo()
     }
 
     function addTodo(newObject) {
@@ -31,32 +18,22 @@ export const useTodosStore = defineStore("TodosStore", () => {
             };
             if (editingIndex.value !== null) {
                 todos[editingIndex.value] = newItem;
-                editingIndex.value = null;
+                editingIndex.value = null;            
             } else {
                 todos.push(newItem);
             }
-            resetTodo();
-            showCreateTodo.value = false;
+            return true;
         }
+        return false;
     }
 
     function editTodo(index) {
-        showCreateTodo.value = true;
-        cardObject.name = todos[index].name;
-        cardObject.address = todos[index].address;
         editingIndex.value = index;
-
-    }
-
-    function resetTodo() {
-        cardObject.name = '';
-        cardObject.address = '';
     }
 
     function deleteTodo(index) {
-        showCreateTodo.value = false;
         todos.splice(index, 1);
     }
 
-    return { todos, showCreateTodo, cardObject, searchInput, editingIndex, filteredTodos, newTodo, addTodo, editTodo, resetTodo, deleteTodo }
+    return { todos, editingIndex, newTodo, addTodo, editTodo, deleteTodo }
 })

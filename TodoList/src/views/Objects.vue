@@ -11,32 +11,54 @@ import CreateTodoForm from '@/components/CreateTodoForm.vue';
 const store = useTodosStore()
 const router = useRouter()
 
+const showCreateTodo = ref(false);
+const searchInput = ref('');
+const cardObject = reactive({ 
+  name: '',
+  address: '',
+})
+
+const filteredTodos = computed(() => {
+  let filterInput = searchInput.value.toLowerCase().trim();
+  return store.todos.filter(item => {
+    return item.name.toLowerCase().includes(filterInput);
+  });
+})
+
 const handleAddItem = () => {
   router.push({ name: 'todolist', params: { id: 'new' } });
-  store.showCreateTodo = !store.showCreateTodo;
+  showCreateTodo.value = !showCreateTodo.value;
   store.newTodo()
-  if (!store.showCreateTodo) {
+  handleResetItem()
+  if (!showCreateTodo.value) {
     router.push({ name: 'todolist' });
   }
 };
 
 const handleSaveItem = (newObject) => {
-  store.addTodo(newObject);
-  if(!store.showCreateTodo){
+  let added = store.addTodo(newObject);
+  if (added) {
+    handleResetItem()
+    showCreateTodo.value = false;
     router.push({ name: 'todolist' });
   }
 }
 
 const handleResetItem = () => {
-  store.resetTodo()
+  cardObject.name = '';
+  cardObject.address = '';
 };
 
 const handleEditItem = (index) => {
   router.push({ name: 'todolist', params: { id: index } })
+  showCreateTodo.value = true;
+  cardObject.name = store.todos[index].name;
+  cardObject.address = store.todos[index].address;
   store.editTodo(index)
 };
 
 const handleDeleteItem = (index) => {
+  showCreateTodo.value = false;
   store.deleteTodo(index);
   router.push({ name: 'todolist' });
 };
@@ -46,13 +68,13 @@ const handleDeleteItem = (index) => {
   <div class="todolist">
     <aside class="sidebar">
       <div class="sidebar-header">
-        <InputComponent v-model.trim="store.searchInput" type="text" placeholder="Поиск" />
+        <InputComponent v-model.trim="searchInput" type="text" placeholder="Поиск" />
         <ButtonComponent color="primary" icon="../src/icons/Add.svg" @click="handleAddItem" />
       </div>
       <div class="sidebar-main">
         <div class="cards">
           <ul class="cards-list">
-            <li v-for="(item, index) in store.filteredTodos" :key="index">
+            <li v-for="(item, index) in filteredTodos" :key="index">
               <ObjectCardComponent :item="item" @editItem="handleEditItem(index)"
                 @deleteItem="handleDeleteItem(index)" />
             </li>
@@ -62,8 +84,8 @@ const handleDeleteItem = (index) => {
       </div>
     </aside>
     <div class="main-container">
-      <p v-if="!store.showCreateTodo" class="empty-editor">Ничего не выбрано</p>
-      <CreateTodoForm v-if="store.showCreateTodo" :object="store.cardObject" @saveItem="handleSaveItem"
+      <p v-if="!showCreateTodo" class="empty-editor">Ничего не выбрано</p>
+      <CreateTodoForm v-if="showCreateTodo" :object="cardObject" @saveItem="handleSaveItem"
         @resetFields="handleResetItem" />
     </div>
 
