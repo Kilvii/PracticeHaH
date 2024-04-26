@@ -13,7 +13,7 @@ const router = useRouter()
 const searchInput = ref("")
 const hideElements = ref(false)
 
-const filteredTodos = computed(() => { //TODO
+const filteredTodos = computed(() => { 
   let filterInput = searchInput.value.toLowerCase().trim();
   if (hideElements.value === true) {
     let filteredItems = store.todos.filter(item => {
@@ -41,7 +41,8 @@ const handleObjectNavigate = () => {
 }
 
 const handleCardVisibility = (index) => {
-  store.todos[index].visibility = !store.todos[index].visibility
+  let editedingIndex = store.todos.findIndex((todo) => todo.id === index)
+  store.todos[editedingIndex].visibility = !store.todos[editedingIndex].visibility
 }
 
 const handleVisibility = () => {
@@ -65,8 +66,8 @@ const handleVisibility = () => {
         <div class="sidebar-main">
           <div class="cards">
             <ul class="cards-list">
-              <li v-for="(item, index) in filteredTodos" :key="index">
-                <ObjectCardComponent :item="item" @removeItem="handleCardVisibility(index)" />
+              <li v-for="(item) in filteredTodos" :key="item.id">
+                <ObjectCardComponent :item="item" @removeItem="handleCardVisibility(item.id)" />
               </li>
             </ul>
           </div>

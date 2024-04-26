@@ -5,6 +5,16 @@ export const useTodosStore = defineStore("TodosStore", () => {
     
     const todos = reactive([])
     const editingIndex = ref(null) 
+    let itemId = 0
+
+    function increacedId() {
+        itemId += 1
+        return itemId
+    }
+
+    function decreaceId() {
+        itemId -= 1
+    }
 
     function newTodo() {
         editingIndex.value = null
@@ -13,13 +23,16 @@ export const useTodosStore = defineStore("TodosStore", () => {
     function addTodo(newObject) {
         if (newObject.name.trim() !== '' && newObject.address.trim() !== '') {
             let newItem = {
+                id: increacedId(),
                 name: newObject.name,
-                address: newObject.address,
+                address: newObject.address,             
                 visibility: newObject.visibility,
             };
             if (editingIndex.value !== null) {
-                todos[editingIndex.value].name = newItem.name;
-                todos[editingIndex.value].address = newItem.address;
+                decreaceId()
+                let correctIndex = todos.findIndex((todo) => todo.id === editingIndex.value)
+                todos[correctIndex].name = newItem.name;
+                todos[correctIndex].address = newItem.address;
                 editingIndex.value = null;            
             } else {
                 todos.push(newItem);
@@ -34,7 +47,8 @@ export const useTodosStore = defineStore("TodosStore", () => {
     }
 
     function deleteTodo(index) {
-        todos.splice(index, 1);
+        let correctIndex = todos.findIndex((todo) => todo.id === index)
+        todos.splice(correctIndex, 1);
     }
 
     return { todos, editingIndex, newTodo, addTodo, editTodo, deleteTodo }

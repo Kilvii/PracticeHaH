@@ -53,8 +53,9 @@ const handleResetItem = () => {
 const handleEditItem = (index) => {
   router.push({ name: 'objects', params: { id: index } })
   showCreateTodo.value = true;
-  cardObject.name = store.todos[index].name;
-  cardObject.address = store.todos[index].address;
+  let editedingObject = store.todos.find((todo) => todo.id === index)
+  cardObject.name = editedingObject.name;
+  cardObject.address = editedingObject.address;
   store.editTodo(index)
 };
 
@@ -84,13 +85,13 @@ const handleVisibilityNavigate = () => {
         <div class="sidebar-main">
           <div class="cards">
             <ul class="cards-list">
-              <li v-for="(item, index) in filteredTodos" :key="index">
-                <ObjectCardComponent :item="item" @editItem="handleEditItem(index)"
-                  @removeItem="handleDeleteItem(index)" />
+              <li v-for="(item) in filteredTodos" :key="item.id">
+                <ObjectCardComponent :item="item" @editItem="handleEditItem(item.id)"
+                  @removeItem="handleDeleteItem(item.id)" />
               </li>
             </ul>
           </div>
-          <p v-if="!store.todos.length" class="empty-list">Список пуст</p>
+          <p v-if="!filteredTodos.length" class="empty-list">Список пуст</p>
         </div>
       </aside>
       <div class="main-container">
