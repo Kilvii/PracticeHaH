@@ -5,10 +5,8 @@ import { useTodosStore } from '@/stores/TodosStore';
 import InputComponent from '@/components/InputComponent.vue';
 import ObjectCardComponent from '@/components/ObjectCardComponent.vue';
 import ToggleComponent from '@/components/ToggleComponent.vue';
-import NavItemComponent from '@/components/NavItemComponent.vue';
 
 const store = useTodosStore()
-const router = useRouter()
 
 const searchInput = ref("")
 const hideElements = ref(false)
@@ -36,10 +34,6 @@ const filteredTodos = computed(() => {
   }
 })
 
-const handleObjectNavigate = () => {
-  router.push({ name: 'objects' });
-}
-
 const handleCardVisibility = (index) => {
   let editedingIndex = store.todos.findIndex((todo) => todo.id === index)
   store.todos[editedingIndex].visibility = !store.todos[editedingIndex].visibility
@@ -49,14 +43,9 @@ const handleVisibility = () => {
   hideElements.value = !hideElements.value
 }
 
-
 </script>
 <template>
   <div class="visibility">
-    <div class="navigation">
-      <NavItemComponent title="Объекты" color="default" @click="handleObjectNavigate" />
-      <NavItemComponent title="Отображение" color="active" />
-    </div>
     <div class="todolist">
       <aside class="sidebar">
         <div class="sidebar-header">

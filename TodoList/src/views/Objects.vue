@@ -6,7 +6,6 @@ import InputComponent from '@/components/InputComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import ObjectCardComponent from '@/components/ObjectCardComponent.vue';
 import CreateTodoForm from '@/components/CreateTodoForm.vue';
-import NavItemComponent from '@/components/NavItemComponent.vue';
 
 const store = useTodosStore()
 const router = useRouter()
@@ -27,12 +26,12 @@ const filteredTodos = computed(() => {
 })
 
 const handleAddItem = () => {
-  router.push({ name: 'objects', params: { id: 'new' } });
+  router.push({ name: 'todolist.objects', params: { id: 'new' } });
   showCreateTodo.value = !showCreateTodo.value;
   store.newTodo()
   handleResetItem()
   if (!showCreateTodo.value) {
-    router.push({ name: 'objects' });
+    router.push({ name: 'todolist.objects' });
   }
 };
 
@@ -41,7 +40,7 @@ const handleSaveItem = (newObject) => {
   if (added) {
     handleResetItem()
     showCreateTodo.value = false;
-    router.push({ name: 'objects' });
+    router.push({ name: 'todolist.objects' });
   }
 }
 
@@ -51,7 +50,7 @@ const handleResetItem = () => {
 };
 
 const handleEditItem = (index) => {
-  router.push({ name: 'objects', params: { id: index } })
+  router.push({ name: 'todolist.objects', params: { id: index } })
   showCreateTodo.value = true;
   let editedingObject = store.todos.find((todo) => todo.id === index)
   cardObject.name = editedingObject.name;
@@ -62,20 +61,12 @@ const handleEditItem = (index) => {
 const handleDeleteItem = (index) => {
   showCreateTodo.value = false;
   store.deleteTodo(index);
-  router.push({ name: 'objects' });
+  router.push({ name: 'todolist.objects' });
 };
-
-const handleVisibilityNavigate = () => {
-  router.push({ name: 'visibility' });
-}
 </script>
 
 <template>
   <div class="objects">
-    <div class="navigation">
-      <NavItemComponent title="Объекты" color="active" />
-      <NavItemComponent title="Отображение" color="default" @click="handleVisibilityNavigate"/>
-    </div>
     <div class="todolist">
       <aside class="sidebar">
         <div class="sidebar-header">
