@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useTodosStore } from '@/stores/TodosStore';
 import InputComponent from '@/components/InputComponent.vue';
@@ -21,7 +21,7 @@ const cardObject = reactive({
 const filteredTodos = computed(() => {
   let filterInput = searchInput.value.toLowerCase().trim();
   return store.todos.filter(item => {
-    return item.name.toLowerCase().includes(filterInput) && item.visibility === true  ;
+    return item.name.toLowerCase().includes(filterInput) && item.visibility === true;
   });
 })
 
@@ -94,18 +94,17 @@ const handleDeleteItem = (index) => {
 </template>
 
 <style scoped>
-
 .sidebar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-    height: 469px;
-    width: 316px;
-    padding-top: 10px;
-    border: 3px solid black;
-    border-radius: 8px;
-    margin-right: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  height: 469px;
+  width: 316px;
+  padding-top: 10px;
+  border: 3px solid black;
+  border-radius: 8px;
+  margin-right: 18px;
 }
 
 .sidebar-header {

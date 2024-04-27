@@ -1,17 +1,36 @@
+import { KeepAlive } from 'vue';
 import { createWebHistory, createRouter } from 'vue-router'
 
 const routes = [
     {
         path: '/',
-        redirect: '/objects',
+        redirect: '/login',
+    },
+    {   
+        path: '/login',
+        name: 'auth',
+        component: page('Auth'),
+        beforeEnter() {
+            if (localStorage.getItem('auth')) {
+                router.push({ name: 'todolist.objects' });
+            } 
+        },
+    },
+    {
+        path: '/objects',
         component: layout('TodolistLayout'),
+        beforeEnter() {
+            if (!localStorage.getItem('auth')) {
+                router.push({ name: 'auth' });
+            } 
+        },
         children: [
             {
                 path: '/objects/:id?', name: 'todolist.objects', component: page('Objects')
             },
             {
                 path: '/visibility', name: 'todolist.visibility', component: page('Visibility')
-            }
+            },
         ]
     },
 ]

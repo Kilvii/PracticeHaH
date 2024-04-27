@@ -5,6 +5,9 @@ export const useTodosStore = defineStore("TodosStore", () => {
     
     const todos = reactive([])
     const editingIndex = ref(null) 
+    const login = ref('admin')
+    const password = ref('admin')
+    const code = ref('123456')
     let itemId = 0
 
     function increacedId() {
@@ -51,5 +54,19 @@ export const useTodosStore = defineStore("TodosStore", () => {
         todos.splice(correctIndex, 1);
     }
 
-    return { todos, editingIndex, newTodo, addTodo, editTodo, deleteTodo }
+    function checkAuth(loginInput, passwordInput) {
+        if(loginInput === login.value && passwordInput === password.value){
+            return true
+        }
+        return false
+    }
+
+    function checkCode(codeInput) {
+        if(codeInput === code.value){
+            return true
+        }
+        return false
+    }
+
+    return { todos, login, password, code, editingIndex, checkAuth, checkCode, newTodo, addTodo, editTodo, deleteTodo }
 })
