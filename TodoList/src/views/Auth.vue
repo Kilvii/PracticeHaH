@@ -1,11 +1,11 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useTodosStore } from '@/stores/TodosStore';
+import { useAuthStore } from '@/stores/AuthStore';
 import InputComponent from '@/components/InputComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 
-const store = useTodosStore()
+const store = useAuthStore()
 const router = useRouter()
 
 const showConfirmationCode = ref(false);
