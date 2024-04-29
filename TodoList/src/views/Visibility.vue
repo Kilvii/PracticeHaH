@@ -5,13 +5,14 @@ import { useTodosStore } from '@/stores/TodosStore';
 import InputComponent from '@/components/InputComponent.vue';
 import ObjectCardComponent from '@/components/ObjectCardComponent.vue';
 import ToggleComponent from '@/components/ToggleComponent.vue';
+import draggableComponent from 'vuedraggable';
 
 const store = useTodosStore()
 
 const searchInput = ref("")
 const hideElements = ref(false)
 
-const filteredTodos = computed(() => { 
+const filteredTodos = computed(() => {
   let filterInput = searchInput.value.toLowerCase().trim();
   if (hideElements.value === true) {
     let filteredItems = store.todos.filter(item => {
@@ -23,13 +24,13 @@ const filteredTodos = computed(() => {
     let filteredItems = store.todos.filter(item => {
       return item.name.toLowerCase().includes(filterInput);
     })
-    .sort((a, b) => {
-      if (a.visibility !== b.visibility) {
-        return a.visibility - b.visibility;
-      } else {
-        return 0;
-      }
-    });
+      .sort((a, b) => {
+        if (a.visibility !== b.visibility) {
+          return a.visibility - b.visibility;
+        } else {
+          return 0;
+        }
+      });
     return filteredItems
   }
 })
@@ -54,11 +55,19 @@ const handleVisibility = () => {
         </div>
         <div class="sidebar-main">
           <div class="cards">
-            <ul class="cards-list">
+            <draggableComponent :list="store.todos" @start="drag = true" @end="drag = false" item-key="id"
+              class="cards-list">
+              <template #item="{ element }">
+                <div v-if="filteredTodos.includes(element)">
+                  <ObjectCardComponent :item="element" @removeItem="handleCardVisibility(element.id)" />
+                </div>
+              </template>
+            </draggableComponent>
+            <!-- <ul class="cards-list">
               <li v-for="(item) in filteredTodos" :key="item.id">
                 <ObjectCardComponent :item="item" @removeItem="handleCardVisibility(item.id)" />
               </li>
-            </ul>
+            </ul> -->
           </div>
           <p v-if="!store.todos.length" class="empty-list">Список пуст</p>
         </div>
@@ -68,7 +77,6 @@ const handleVisibility = () => {
 </template>
 
 <style scoped>
-
 .sidebar {
   display: flex;
   flex-direction: column;

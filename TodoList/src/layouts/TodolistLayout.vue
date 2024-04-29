@@ -11,6 +11,7 @@ const handleVisibilityNavigate = () => {
 const handleObjectNavigate = () => {
     router.push({ name: 'todolist.objects' });
 }
+
 </script>
 
 <template>
