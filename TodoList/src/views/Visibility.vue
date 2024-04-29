@@ -63,11 +63,6 @@ const handleVisibility = () => {
                 </div>
               </template>
             </draggableComponent>
-            <!-- <ul class="cards-list">
-              <li v-for="(item) in filteredTodos" :key="item.id">
-                <ObjectCardComponent :item="item" @removeItem="handleCardVisibility(item.id)" />
-              </li>
-            </ul> -->
           </div>
           <p v-if="!store.todos.length" class="empty-list">Список пуст</p>
         </div>
