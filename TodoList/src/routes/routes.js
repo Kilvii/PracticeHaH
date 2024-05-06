@@ -16,10 +16,13 @@ const routes = [
         component: layout('TodolistLayout'),
         children: [
             {
-                path: '/objects/:id?', name: 'todolist.objects', component: page('Objects')
+                path: '/objects/:id?', name: 'todolist.objects', component: page('Objects'),
             },
             {
-                path: '/visibility', name: 'todolist.visibility', component: page('Visibility')
+                path: '/visibility', name: 'todolist.visibility', component: page('Visibility'),
+            },
+            {
+                path: '/map', name: 'todolist.map', component: page('Map'),
             },
         ]
     },
@@ -38,13 +41,13 @@ const router = createRouter({
     routes,
 })
 
-router.beforeEach( async (to, from) => {
-    if(!localStorage.getItem('auth') && to.name !== 'auth'){
+router.beforeEach(async (to, from) => {
+    if (!localStorage.getItem('auth') && to.name !== 'auth') {
         return { name: 'auth' }
     }
     if (localStorage.getItem('auth') && to.name === 'auth') {
-        return { name: 'todolist.objects'}
-      }
+        return { name: 'todolist.objects' }
+    }
 })
 
 

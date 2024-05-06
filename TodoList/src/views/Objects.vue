@@ -17,6 +17,7 @@ const searchInput = ref('');
 const cardObject = reactive({
   name: '',
   address: '',
+  coordinates: '',
   visibility: true,
 })
 
@@ -49,6 +50,7 @@ const handleSaveItem = (newObject) => {
 const handleResetItem = () => {
   cardObject.name = '';
   cardObject.address = '';
+  cardObject.coordinates = '';
 };
 
 const handleEditItem = (index) => {
@@ -57,6 +59,7 @@ const handleEditItem = (index) => {
   let editedingObject = store.todos.find((todo) => todo.id === index)
   cardObject.name = editedingObject.name;
   cardObject.address = editedingObject.address;
+  cardObject.coordinates = editedingObject.coordinates;
   store.editTodo(index)
 };
 
@@ -84,7 +87,7 @@ const handleDeleteItem = (index) => {
     <div class="todolist">
       <aside class="sidebar">
         <div class="sidebar-header">
-          <InputComponent v-model.trim="searchInput" type="text" placeholder="Поиск" />
+          <InputComponent v-model.trim="searchInput" type="text" placeholder="Поиск" :max-lenght="20" />
           <ButtonComponent color="primary" icon="../src/icons/Add.svg" @click="handleAddItem" />
         </div>
         <div class="sidebar-main">
@@ -104,7 +107,7 @@ const handleDeleteItem = (index) => {
           @resetFields="handleResetItem" />
       </div>
     </div>
-    <ModalComponent v-if="showDeleteModal" @close="exitModal()" @deleteItem="handleDeleteItem(store.editingIndex)"/>
+    <ModalComponent v-if="showDeleteModal" @close="exitModal()" @deleteItem="handleDeleteItem(store.editingIndex)" />
   </div>
 </template>
 

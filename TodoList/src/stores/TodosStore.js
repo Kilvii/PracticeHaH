@@ -21,11 +21,12 @@ export const useTodosStore = defineStore("TodosStore", () => {
     }
 
     function addTodo(newObject) {
-        if (newObject.name.trim() !== '' && newObject.address.trim() !== '') {
+        if (newObject.name.trim() !== '' && newObject.address.trim() !== '' && newObject.coordinates.trim() !== '') {
             let newItem = {
                 id: increacedId(),
                 name: newObject.name,
-                address: newObject.address,             
+                address: newObject.address,
+                coordinates: newObject.coordinates,
                 visibility: newObject.visibility,
             };
             if (editingIndex.value !== null) {
@@ -33,6 +34,7 @@ export const useTodosStore = defineStore("TodosStore", () => {
                 let correctIndex = todos.findIndex((todo) => todo.id === editingIndex.value)
                 todos[correctIndex].name = newItem.name;
                 todos[correctIndex].address = newItem.address;
+                todos[correctIndex].coordinates = newItem.coordinates;
                 editingIndex.value = null;            
             } else {
                 todos.push(newItem);

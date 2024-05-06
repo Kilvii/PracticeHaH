@@ -2,14 +2,14 @@
 const emit = defineEmits(['changeVisibility'])
 
 function changeVisibility() {
-  emit('changeVisibility');
+    emit('changeVisibility');
 }
 
 </script>
 
 <template>
     <label class="switch">
-        <input type="checkbox" >
+        <input type="checkbox">
         <span class="slider" @click.stop="changeVisibility"></span>
     </label>
 </template>

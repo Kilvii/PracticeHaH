@@ -25,8 +25,12 @@ function resetItem() {
 <template>
     <div class="createTodo">
         <div class="inputTodo">
-            <InputComponent v-model.trim="formObject.name" type="text" placeholder="Название объекта" />
-            <InputComponent v-model.trim="formObject.address" type="text" placeholder="Адрес объекта" />
+            <InputComponent v-model.trim="formObject.name" type="text" placeholder="Название объекта"
+                :max-lenght="22" />
+            <InputComponent v-model.trim="formObject.address" type="text" placeholder="Адрес объекта"
+                :max-lenght="22" />
+            <InputComponent v-model.trim="formObject.coordinates" type="text" placeholder="Координаты: 53.12, 48.76"
+                :max-lenght="22" />
         </div>
         <div class="btnTodo">
             <ButtonComponent color="reset" title="Сбросить" @click="resetItem" />

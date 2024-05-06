@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({ 
+const props = defineProps({
     type: {
         type: String,
         default: "text",
@@ -8,6 +8,10 @@ const props = defineProps({
         type: String,
         default: "Ввод",
     },
+    maxLenght: {
+        type: Number,
+        default: 20
+    }
 })
 
 const model = defineModel()
@@ -16,7 +20,7 @@ const model = defineModel()
 
 <template>
     <div class="input-wrap">
-        <input class="input-field" v-model="model" :placeholder="placeholder" />
+        <input class="input-field" v-model="model" :placeholder="placeholder" :maxlength="maxLenght" />
     </div>
 </template>
 

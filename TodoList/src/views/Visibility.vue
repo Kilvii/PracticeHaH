@@ -50,7 +50,7 @@ const handleVisibility = () => {
     <div class="todolist">
       <aside class="sidebar">
         <div class="sidebar-header">
-          <InputComponent v-model.trim="searchInput" type="text" placeholder="Поиск" />
+          <InputComponent v-model.trim="searchInput" type="text" placeholder="Поиск" :max-lenght="20" />
           <ToggleComponent @click="handleVisibility" />
         </div>
         <div class="sidebar-main">

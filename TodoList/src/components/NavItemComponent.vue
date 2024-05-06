@@ -15,7 +15,7 @@ const props = defineProps({
 const emit = defineEmits(['navigate'])
 
 function handleNavigation() {
-  emit('navigate');
+    emit('navigate');
 }
 
 </script>
@@ -48,7 +48,7 @@ function handleNavigation() {
 .btn_active {
     border: 2px solid black;
     background-color: white;
-    color:black;
+    color: black;
 }
 
 .btn_default {
