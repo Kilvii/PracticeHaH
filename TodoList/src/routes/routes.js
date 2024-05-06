@@ -6,24 +6,14 @@ const routes = [
         path: '/',
         redirect: '/login',
     },
-    {   
+    {
         path: '/login',
         name: 'auth',
         component: page('Auth'),
-        beforeEnter() {
-            if (localStorage.getItem('auth')) {
-                router.push({ name: 'todolist.objects' });
-            } 
-        },
     },
     {
         path: '/objects',
         component: layout('TodolistLayout'),
-        beforeEnter() {
-            if (!localStorage.getItem('auth')) {
-                router.push({ name: 'auth' });
-            } 
-        },
         children: [
             {
                 path: '/objects/:id?', name: 'todolist.objects', component: page('Objects')
@@ -47,5 +37,15 @@ const router = createRouter({
     history: createWebHistory(),
     routes,
 })
+
+router.beforeEach( async (to, from) => {
+    if(!localStorage.getItem('auth') && to.name !== 'auth'){
+        return { name: 'auth' }
+    }
+    if (localStorage.getItem('auth') && to.name === 'auth') {
+        return { name: 'todolist.objects'}
+      }
+})
+
 
 export default router;

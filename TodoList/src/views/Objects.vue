@@ -6,11 +6,13 @@ import InputComponent from '@/components/InputComponent.vue';
 import ButtonComponent from '@/components/ButtonComponent.vue';
 import ObjectCardComponent from '@/components/ObjectCardComponent.vue';
 import CreateTodoForm from '@/components/CreateTodoForm.vue';
+import ModalComponent from '@/components/ModalComponent.vue';
 
 const store = useTodosStore()
 const router = useRouter()
 
 const showCreateTodo = ref(false);
+const showDeleteModal = ref(false);
 const searchInput = ref('');
 const cardObject = reactive({
   name: '',
@@ -58,9 +60,21 @@ const handleEditItem = (index) => {
   store.editTodo(index)
 };
 
+const confirmDeleteItem = (index) => {
+  showDeleteModal.value = !showDeleteModal.value;
+  router.push({ name: 'todolist.objects', params: { id: 'delete' } });
+  store.editTodo(index)
+}
+
+const exitModal = () => {
+  showDeleteModal.value = false;
+  router.push({ name: 'todolist.objects' });
+}
+
 const handleDeleteItem = (index) => {
   showCreateTodo.value = false;
   store.deleteTodo(index);
+  showDeleteModal.value = false;
   router.push({ name: 'todolist.objects' });
 };
 </script>
@@ -78,7 +92,7 @@ const handleDeleteItem = (index) => {
             <ul class="cards-list">
               <li v-for="(item) in filteredTodos" :key="item.id">
                 <ObjectCardComponent :item="item" @editItem="handleEditItem(item.id)"
-                  @removeItem="handleDeleteItem(item.id)" />
+                  @removeItem="confirmDeleteItem(item.id)" />
               </li>
             </ul>
           </div>
@@ -90,6 +104,7 @@ const handleDeleteItem = (index) => {
           @resetFields="handleResetItem" />
       </div>
     </div>
+    <ModalComponent v-if="showDeleteModal" @close="exitModal()" @deleteItem="handleDeleteItem(store.editingIndex)"/>
   </div>
 </template>
 
