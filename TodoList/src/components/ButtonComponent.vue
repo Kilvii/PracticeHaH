@@ -16,7 +16,7 @@ const props = defineProps({
 </script>
 <template>
     <div class="btn-wrap">
-        <button class="btn" :class="[`btn_${color}`]">
+        <button class="btn" :class="[`btn_${color}`]" >
             <img v-if="icon" :src="icon" alt="btn-icon" />
             {{ title }}
         </button>
