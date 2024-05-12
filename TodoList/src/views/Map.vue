@@ -1,13 +1,7 @@
-<script setup>//TODO
-import { computed, onMounted, onUpdated, reactive, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/AuthStore';
+<script setup>
 import { useTodosStore } from '@/stores/TodosStore';
-import InputComponent from '@/components/InputComponent.vue';
-import ButtonComponent from '@/components/ButtonComponent.vue';
 
 const store = useTodosStore()
-const router = useRouter()
 
 ymaps.ready(init);
 
